@@ -44,112 +44,113 @@ class MainActivity : ComponentActivity() {
                     mutableIntStateOf(0)
                 }
 
-               Scaffold (
-                   bottomBar = {
+                Scaffold(
+                    bottomBar = {
 
-                       NavigationBar {
+                        NavigationBar {
+                            bottomNavItems.forEachIndexed { index, bottomNavItem ->
+                                NavigationBarItem(
+                                    selected = index == selected,
+                                    onClick = {
+                                        selected = index
+                                        //   navController.navigate (bottomNavItem.route)
+                                    },
+                                    icon = {
 
-                           bottomNavItems.forEachIndexed { index,bottomNavItem ->
-                               NavigationBarItem(
-                                   selected = index == selected ,
-                                   onClick = {
-                                       selected = index
-                                 //   navController.navigate (bottomNavItem.route)
-                                   },
-                                   icon = {
+                                        BadgedBox(
+                                            badge = {
+                                                if (bottomNavItem.badges != 0) {
+                                                   Badge{
+                                                       Text(
+                                                           text = bottomNavItem.badges.toString()
+                                                       )
+                                                   }
+                                                } else if (
+                                                    bottomNavItem.hasNews) {
+                                                    Badge()
+                                                }
+                                            }
+                                        ) {
+                                            Icon(
+                                                imageVector =
+                                                if (index == selected)
+                                                    bottomNavItem.selectedIcon
+                                                else
+                                                    bottomNavItem.unselectedIcon,
+                                                contentDescription = bottomNavItem.title
 
-                                       BadgedBox(
+                                            )
+                                        }
+                                    },
+                                    label = {
+                                        Text(text = bottomNavItem.title)
+                                    }
+                                )
+                            }
+                        }
+                    },
+                    floatingActionButton = {
 
-                                           badge = { if (bottomNavItem.badges != 0 ) {
-                                               Text (
-                                                   text =bottomNavItem.badges.toString()
-                                               )
-                                           } else if (
-                                               bottomNavItem.hasNews) {
-                                               Badge()
-                                           }
-                                   }
-                                       )  {
-                                           Icon(
-                                               imageVector =
-                                                   if (index == selected)
-                                               bottomNavItem.selectedIcon
-                                               else
-                                                   bottomNavItem.unselectedIcon,
-                                               contentDescription = bottomNavItem.title
+                        FloatingActionButton(
+                            onClick = { /*TODO*/ },
+                        ) {}
+                    }
+                ) {
 
-                                           )
-                                           }
-                                   },
-                                   label = {
-                                       Text(text = bottomNavItem.title)
-                                   }
-                               )
-                           }
-                       }
-                   },
-                   floatingActionButton = {
-
-                       FloatingActionButton(
-                           onClick = { /*TODO*/ },
-                       ) {}
-                   }
-               ) {
-
-                   val padding = it
-               }
+                    val padding = it
+                }
             }
         }
     }
 }
 
- val bottomNavItems = listOf(
+val bottomNavItems = listOf(
 
-     BottomNavItem (
-         title = "Home",
-         route = "home",
-         selectedIcon = Icons.Filled.Home,
-         unselectedIcon = Icons.Outlined.Home,
-         hasNews = false,
-         badges = 0
-     ),
-     BottomNavItem (
+    BottomNavItem(
+        title = "Home",
+        route = "home",
+        selectedIcon = Icons.Filled.Home,
+        unselectedIcon = Icons.Outlined.Home,
+        hasNews = false,
+        badges = 0
+    ),
+    BottomNavItem(
 
-         title = "Posts",
-         route = "posts",
-         selectedIcon = Icons.Filled.DateRange,
-         unselectedIcon = Icons.Outlined.DateRange,
-         hasNews = false,
-         badges = 0
-     ),
-     BottomNavItem (
+        title = "Posts",
+        route = "posts",
+        selectedIcon = Icons.Filled.DateRange,
+        unselectedIcon = Icons.Outlined.DateRange,
+        hasNews = false,
+        badges = 0
+    ),
+    BottomNavItem(
 
-         title = "Notifications",
-         route = "notifications",
-         selectedIcon = Icons.Filled.Notifications,
-         unselectedIcon = Icons.Outlined.Notifications,
-         hasNews = false,
-         badges = 5
-     ),
-     BottomNavItem (
+        title = "Notifications",
+        route = "notifications",
+        selectedIcon = Icons.Filled.Notifications,
+        unselectedIcon = Icons.Outlined.Notifications,
+        hasNews = false,
+        badges = 5
+    ),
+    BottomNavItem(
 
-         title = "Profile",
-         route = "profile",
-         selectedIcon = Icons.Filled.AccountCircle,
-         unselectedIcon = Icons.Outlined.AccountCircle,
-         hasNews = true,
-         badges = 0
-     )
- )
+        title = "Profile",
+        route = "profile",
+        selectedIcon = Icons.Filled.AccountCircle,
+        unselectedIcon = Icons.Outlined.AccountCircle,
+        hasNews = true,
+        badges = 0
+    )
+)
 
-data class BottomNavItem (
+data class BottomNavItem(
 
     val title: String,
-    val route : String,
-    val selectedIcon : ImageVector,
-    val unselectedIcon : ImageVector,
-    val hasNews : Boolean,
-    val badges : Int
+    val route: String,
+    val selectedIcon: ImageVector,
+    val unselectedIcon: ImageVector,
+    val hasNews: Boolean,
+    val badges: Int
 
 )
 
